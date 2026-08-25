@@ -1,0 +1,21 @@
+<section id="case-studies" style="background: var(--bg-secondary); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Case Studies</div>
+      <h2>{{ value.title }}</h2>
+      {% if value.subtitle %}<p>{{ value.subtitle }}</p>{% endif %}
+    </div>
+
+    <div class="case-studies-grid">
+      {% for cs in value.case_studies %}
+        <div class="case-card">
+          <div class="client-tag">{{ cs.client_name }} • {{ cs.category_tag }}</div>
+          <h3>{{ cs.project_title }}</h3>
+          <div class="impact-pill">🚀 {{ cs.impact_metric }}</div>
+          <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.95rem;">{{ cs.summary }}</p>
+          <a href="{{ cs.link_url }}" class="btn btn-secondary" style="font-size: 0.88rem; padding: 0.6rem 1.2rem;">Read Case Study →</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="hero-section" style="padding-top: 10rem; padding-bottom: 4rem;">
+  <div class="container" style="max-width: 800px;">
+    <div style="font-size: 0.9rem; color: var(--accent-red-bright); font-weight: 600; margin-bottom: 0.75rem;">
+      Published {{ page.date|date:"F j, Y" }} • {{ page.read_time }} • By {{ page.author }}
+    </div>
+    <h1><span class="text-gradient">{{ page.title }}</span></h1>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="max-width: 800px;">
+    <article style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 3.5rem; color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
+      {{ page.body|richtext }}
+    </article>
+  </div>
+</section>
+{% endblock %}

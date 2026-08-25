@@ -1,0 +1,14 @@
+<section>
+  <div class="container">
+    <div class="testimonial-card">
+      {% if value.metric_badge %}
+        <div class="section-tag" style="margin-bottom: 2rem;">{{ value.metric_badge }}</div>
+      {% endif %}
+      <blockquote>"{{ value.quote }}"</blockquote>
+      <div class="author-info">
+        <h4>{{ value.author }}</h4>
+        <p>{{ value.role }} • <span class="text-red">{{ value.company }}</span></p>
+      </div>
+    </div>
+  </div>
+</section>

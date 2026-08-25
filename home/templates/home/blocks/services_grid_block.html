@@ -1,0 +1,35 @@
+<section id="services">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Solutions & Services</div>
+      <h2>{{ value.title }}</h2>
+      {% if value.subtitle %}<p>{{ value.subtitle }}</p>{% endif %}
+    </div>
+
+    <div class="services-grid">
+      {% for s in value.services %}
+        <div class="service-card">
+          <div>
+            {% if s.badge %}
+              <div class="service-badge">{{ s.badge }}</div>
+            {% endif %}
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.description }}</p>
+
+            {% if s.features %}
+              <ul class="feature-list">
+                {% for f in s.features %}
+                  <li>{{ f }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+
+          <div>
+            <a href="{{ s.link_url }}" class="btn btn-secondary" style="width: 100%;">Explore Service →</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

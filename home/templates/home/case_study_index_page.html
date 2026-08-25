@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="hero-section" style="padding-top: 10rem; padding-bottom: 4rem;">
+  <div class="container" style="text-align: center; max-width: 800px;">
+    <div class="section-tag">Proven Results</div>
+    <h1><span class="text-gradient">{{ page.title }}</span></h1>
+    <div class="text-muted" style="font-size: 1.15rem; margin-top: 1rem;">
+      {{ page.intro|richtext }}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="case-studies-grid">
+      {% for cs in case_studies %}
+        <div class="case-card">
+          <div class="client-tag">{{ cs.client_name }} • {{ cs.industry }}</div>
+          <h3>{{ cs.title }}</h3>
+          <div class="impact-pill">🚀 {{ cs.impact_metric }}</div>
+          <p class="text-muted" style="margin-bottom: 1.5rem;">{{ cs.summary }}</p>
+          <a href="{{ cs.url }}" class="btn btn-secondary" style="font-size: 0.88rem;">Read Full Case Study →</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="hero-section" style="padding-top: 10rem; padding-bottom: 4rem;">
+  <div class="container" style="max-width: 900px;">
+    <div class="section-tag">{{ page.client_name }} • {{ page.industry }}</div>
+    <h1><span class="text-gradient">{{ page.title }}</span></h1>
+    <div class="impact-pill" style="font-size: 1.1rem; padding: 0.6rem 1.25rem; margin-top: 1.5rem;">
+      🏆 Measured Impact: {{ page.impact_metric }}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="max-width: 900px;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 3.5rem;">
+      <div style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
+        {{ page.body|richtext }}
+      </div>
+
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); text-align: center;">
+        <h3 style="margin-bottom: 1rem;">Want Similar Results For Your Business?</h3>
+        <a href="/contact/" class="btn btn-primary">Work With Datum Metrics →</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="hero-section" style="padding-top: 10rem; padding-bottom: 4rem;">
+  <div class="container" style="max-width: 800px; text-align: center;">
+    <div class="section-tag">Start A Project</div>
+    <h1><span class="text-gradient">{{ page.title }}</span></h1>
+    <div class="text-muted" style="font-size: 1.15rem; margin-top: 1rem;">
+      {{ page.intro|richtext }}
+    </div>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <h2 style="font-size: 2rem; margin-bottom: 1.25rem;">Let's Build Something Exceptional</h2>
+        <p class="text-muted" style="margin-bottom: 2rem; font-size: 1.05rem;">
+          Whether you need enterprise Web Development in Wagtail, scalable SaaS platform engineering, a zero-trust Cyber-Security audit, or real-time Data Analytics pipelines, our team is ready.
+        </p>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+          <div>
+            <h4 style="color: var(--accent-red-bright); margin-bottom: 0.3rem;">Direct Email</h4>
+            <p style="color: var(--text-primary); font-weight: 600;">contact@datummetrics.com</p>
+          </div>
+          <div>
+            <h4 style="color: var(--accent-red-bright); margin-bottom: 0.3rem;">Response Time SLA</h4>
+            <p style="color: var(--text-primary); font-weight: 600;">Within 24 Business Hours</p>
+          </div>
+          <div>
+            <h4 style="color: var(--accent-red-bright); margin-bottom: 0.3rem;">Primary Specializations</h4>
+            <p class="text-muted" style="font-size: 0.9rem;">Web Development • Software as a Service • Cyber-Security • Data Analytics</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 3rem;">
+        {% if self.thank_you_text and request.method == 'POST' %}
+          <div style="color: #10B981; font-size: 1.2rem; font-weight: 600;">
+            {{ page.thank_you_text|richtext }}
+          </div>
+        {% else %}
+          <form action="{% pageurl page %}" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}<span class="text-red">*</span>{% endif %}</label>
+                {{ field }}
+                {% if field.errors %}
+                  <div style="color: var(--accent-red-bright); font-size: 0.85rem; margin-top: 0.3rem;">{{ field.errors }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.05rem; padding: 1rem;">Submit Consultation Request →</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

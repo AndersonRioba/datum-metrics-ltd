@@ -1,0 +1,52 @@
+<section class="hero-section">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      {% if value.metric_badge %}
+        <div class="section-tag">{{ value.metric_badge }}</div>
+      {% endif %}
+      <h1><span class="text-gradient">{{ value.title }}</span></h1>
+      <p>{{ value.subtitle }}</p>
+      <div class="hero-actions">
+        {% if value.primary_cta_text %}
+          <a href="{{ value.primary_cta_url }}" class="btn btn-primary">{{ value.primary_cta_text }} →</a>
+        {% endif %}
+        {% if value.secondary_cta_text %}
+          <a href="{{ value.secondary_cta_url }}" class="btn btn-secondary">{{ value.secondary_cta_text }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="hero-graphic">
+      <div class="hero-card-preview">
+        <div class="preview-header">
+          <div style="font-weight: 700; font-family: var(--font-heading); display: flex; align-items: center; gap: 0.5rem;">
+            <span style="color: var(--accent-red-bright);">❖</span> Datum Core Engine
+          </div>
+          <div class="status-badge">
+            <span style="width: 7px; height: 7px; background: #10B981; border-radius: 50%;"></span>
+            Active Telemetry
+          </div>
+        </div>
+
+        <div class="preview-metrics-grid">
+          <div class="metric-mini-card">
+            <div class="val">99.99%</div>
+            <div class="lbl">Platform SLA</div>
+          </div>
+          <div class="metric-mini-card">
+            <div class="val">&lt; 4ms</div>
+            <div class="lbl">Query Latency</div>
+          </div>
+          <div class="metric-mini-card">
+            <div class="val">Zero</div>
+            <div class="lbl">Sec Threats</div>
+          </div>
+          <div class="metric-mini-card">
+            <div class="val">10B+</div>
+            <div class="lbl">Daily Events</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

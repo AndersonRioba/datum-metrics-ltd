@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="hero-section" style="padding-top: 10rem; padding-bottom: 4rem;">
+  <div class="container" style="text-align: center; max-width: 800px;">
+    <div class="section-tag">Thought Leadership</div>
+    <h1><span class="text-gradient">{{ page.title }}</span></h1>
+    <div class="text-muted" style="font-size: 1.15rem; margin-top: 1rem;">
+      {{ page.intro|richtext }}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container" style="max-width: 900px;">
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      {% for post in blog_posts %}
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 2.2rem; transition: all var(--transition-fast);">
+          <div style="font-size: 0.85rem; color: var(--accent-red-bright); margin-bottom: 0.5rem; font-weight: 600;">
+            {{ post.date|date:"F j, Y" }} • {{ post.read_time }} • By {{ post.author }}
+          </div>
+          <h2 style="font-size: 1.5rem; margin-bottom: 0.75rem;"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+          <p class="text-muted" style="margin-bottom: 1.25rem;">{{ post.intro }}</p>
+          <a href="{{ post.url }}" class="btn btn-secondary" style="font-size: 0.88rem;">Read Article →</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

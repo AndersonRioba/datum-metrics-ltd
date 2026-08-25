@@ -1,0 +1,21 @@
+<section class="stats-section">
+  <div class="container">
+    {% if value.title %}
+      <div class="section-header">
+        <div class="section-tag">Empirical Proof</div>
+        <h2>{{ value.title }}</h2>
+        {% if value.subtitle %}<p>{{ value.subtitle }}</p>{% endif %}
+      </div>
+    {% endif %}
+
+    <div class="stats-grid">
+      {% for stat in value.stats %}
+        <div class="stat-card">
+          <div class="stat-number">{{ stat.number }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+          {% if stat.description %}<div class="stat-desc">{{ stat.description }}</div>{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
