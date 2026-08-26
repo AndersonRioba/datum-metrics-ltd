@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/raveyhpw/datum-metrics/
+    - /bin/cp -R * $DEPLOYPATH
