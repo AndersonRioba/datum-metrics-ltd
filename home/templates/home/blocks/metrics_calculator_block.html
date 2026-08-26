@@ -1,56 +1,98 @@
 <section class="calc-section">
+  <div class="calc-glow-radial"></div>
   <div class="container">
-    <div class="calc-card">
-      <div class="section-header" style="margin-bottom: 2rem;">
-        <div class="section-tag">Live ROI Estimator</div>
-        <h2>{{ value.title }}</h2>
-        {% if value.subtitle %}<p>{{ value.subtitle }}</p>{% endif %}
+    <div class="calc-card modern-calculator-card">
+      <div class="calc-header-wrap">
+        <div class="section-tag">
+          <span class="live-dot"></span>
+          Live ROI &amp; Efficiency Simulator
+        </div>
+        <h2 class="calc-title">{{ value.title }}</h2>
+        {% if value.subtitle %}
+          <p class="calc-subtitle">{{ value.subtitle }}</p>
+        {% endif %}
       </div>
 
-      <div class="calc-controls">
-        <div>
-          <div class="slider-group">
-            <label for="calc-volume">
-              <span>Daily Events / Data Volume</span>
-              <span id="volume-val" class="text-red">100M</span>
-            </label>
-            <input type="range" id="calc-volume" min="10" max="500" value="100" step="5">
+      <div class="calc-interactive-grid">
+        <!-- Controls Column -->
+        <div class="calc-controls-col">
+          <div class="slider-box">
+            <div class="slider-header">
+              <div class="slider-label-group">
+                <span class="slider-icon">⚡</span>
+                <span class="slider-label">Daily Data Events / Throughput</span>
+              </div>
+              <div class="slider-badge" id="volume-val">100M</div>
+            </div>
+            <input type="range" id="calc-volume" min="10" max="1000" value="100" step="10" class="modern-slider">
+            <div class="slider-ticks">
+              <span>10M</span>
+              <span>250M</span>
+              <span>500M</span>
+              <span>1B+</span>
+            </div>
           </div>
 
-          <div class="slider-group">
-            <label for="calc-users">
-              <span>Active Concurrent Users / SaaS Tenants</span>
-              <span id="users-val" class="text-red">5,000</span>
-            </label>
-            <input type="range" id="calc-users" min="500" max="50000" value="5000" step="500">
+          <div class="slider-box">
+            <div class="slider-header">
+              <div class="slider-label-group">
+                <span class="slider-icon">👥</span>
+                <span class="slider-label">Active Concurrent Users / SaaS Tenants</span>
+              </div>
+              <div class="slider-badge" id="users-val">5,000</div>
+            </div>
+            <input type="range" id="calc-users" min="500" max="100000" value="5000" step="500" class="modern-slider">
+            <div class="slider-ticks">
+              <span>500</span>
+              <span>25K</span>
+              <span>50K</span>
+              <span>100K+</span>
+            </div>
+          </div>
+
+          <div class="calculator-footnote">
+            <span class="foot-icon">💡</span>
+            <span>Based on benchmark metrics from Datum Core cluster telemetry with Wagtail CMS, async workers, and zero-trust DB caching.</span>
           </div>
         </div>
 
-        <div class="calc-results">
-          <div class="result-row">
-            <div>
-              <div style="font-weight: 600; color: var(--text-primary);">Estimated Throughput Gain</div>
-              <div style="font-size: 0.85rem; color: var(--text-muted);">Optimized pipeline efficiency</div>
+        <!-- Dynamic Results Cards Column -->
+        <div class="calc-results-col">
+          <div class="result-tile primary-tile">
+            <div class="tile-top">
+              <span class="tile-icon">🚀</span>
+              <span class="tile-label">Estimated System Throughput Boost</span>
             </div>
-            <div id="res-roi" class="result-val">+360%</div>
+            <div class="tile-main-val" id="res-roi">+360%</div>
+            <div class="tile-bar-progress">
+              <div class="tile-bar-fill" id="res-roi-bar" style="width: 78%;"></div>
+            </div>
+            <span class="tile-caption">Compared to legacy monolithic or traditional stack configurations</span>
           </div>
 
-          <div class="result-row">
-            <div>
-              <div style="font-weight: 600; color: var(--text-primary);">Target API Response Latency</div>
-              <div style="font-size: 0.85rem; color: var(--text-muted);">Sub-second execution</div>
+          <div class="result-tile secondary-tile">
+            <div class="tile-top">
+              <span class="tile-icon">⚡</span>
+              <span class="tile-label">Target Global API Latency</span>
             </div>
-            <div id="res-latency" class="result-val">&lt; 7.0 ms</div>
+            <div class="tile-main-val green-val" id="res-latency">&lt; 4.8 ms</div>
+            <span class="tile-caption">Sub-5ms edge cache &amp; connection multiplexing</span>
           </div>
 
-          <div class="result-row">
-            <div>
-              <div style="font-weight: 600; color: var(--text-primary);">Estimated Annual Infrastructure Savings</div>
-              <div style="font-size: 0.85rem; color: var(--text-muted);">Based on cloud resource optimization</div>
+          <div class="result-tile highlight-tile">
+            <div class="tile-top">
+              <span class="tile-icon">💰</span>
+              <span class="tile-label">Estimated Annual Infrastructure Savings</span>
             </div>
-            <div id="res-savings" class="result-val">$1,390,000</div>
+            <div class="tile-main-val red-val" id="res-savings">$1,390,000</div>
+            <span class="tile-caption">Reduced compute bloat, autoscaling efficiency, and zero downtime</span>
           </div>
         </div>
+      </div>
+
+      <div class="calc-cta-bottom">
+        <span>Want a tailored technical analysis for your current stack?</span>
+        <a href="/contact/" class="btn btn-primary btn-sm">Request Architecture Review &rarr;</a>
       </div>
     </div>
   </div>

@@ -1,32 +1,67 @@
-<section id="services">
+<section id="services" class="services-section">
+  <div class="services-glow-bg"></div>
   <div class="container">
-    <div class="section-header">
-      <div class="section-tag">Solutions & Services</div>
-      <h2>{{ value.title }}</h2>
-      {% if value.subtitle %}<p>{{ value.subtitle }}</p>{% endif %}
+    <div class="section-header text-center">
+      <div class="section-tag">
+        <span class="live-dot"></span>
+        Enterprise Capabilities
+      </div>
+      <h2 class="section-title">Engineered For <span class="text-gradient">Scale &amp; Resilience</span></h2>
+      {% if value.subtitle %}
+        <p class="section-subtitle">{{ value.subtitle }}</p>
+      {% endif %}
     </div>
 
     <div class="services-grid">
       {% for s in value.services %}
-        <div class="service-card">
-          <div>
+        <div class="service-card modern-card" data-category="{{ s.category }}">
+          <div class="card-glow-layer"></div>
+          
+          <div class="service-card-top">
+            <div class="service-icon-box">
+              {% if s.category == "Web Development" %}
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF2B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              {% elif s.category == "SaaS Platform" or "SaaS" in s.category %}
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF2B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              {% elif "Cyber" in s.category or "Security" in s.category %}
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF2B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+              {% elif "Data" in s.category or "Analytics" in s.category %}
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF2B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              {% elif "AI" in s.category or "Machine" in s.category %}
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF2B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              {% else %}
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF2B3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+              {% endif %}
+            </div>
+            
             {% if s.badge %}
-              <div class="service-badge">{{ s.badge }}</div>
+              <div class="service-badge-pill">{{ s.badge }}</div>
             {% endif %}
-            <h3>{{ s.title }}</h3>
-            <p>{{ s.description }}</p>
+          </div>
+
+          <div class="service-card-body">
+            <span class="service-cat-label">{{ s.category }}</span>
+            <h3 class="service-card-title">{{ s.title }}</h3>
+            <p class="service-card-desc">{{ s.description }}</p>
 
             {% if s.features %}
-              <ul class="feature-list">
+              <div class="feature-divider"></div>
+              <ul class="feature-list modern-feature-list">
                 {% for f in s.features %}
-                  <li>{{ f }}</li>
+                  <li>
+                    <span class="feat-bullet">&check;</span>
+                    <span>{{ f }}</span>
+                  </li>
                 {% endfor %}
               </ul>
             {% endif %}
           </div>
 
-          <div>
-            <a href="{{ s.link_url }}" class="btn btn-secondary" style="width: 100%;">Explore Service →</a>
+          <div class="service-card-footer">
+            <a href="{{ s.link_url }}" class="service-action-link">
+              <span>Explore Capability</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
       {% endfor %}

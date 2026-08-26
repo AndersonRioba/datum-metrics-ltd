@@ -1,8 +1,38 @@
-<section style="background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.25) 0%, rgba(10, 11, 13, 1) 100%); border-top: 1px solid var(--border-accent);">
-  <div class="container" style="text-align: center; max-width: 800px;">
-    <div class="section-tag">Take Action</div>
-    <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.25rem;">{{ value.title }}</h2>
-    <p style="color: var(--text-secondary); font-size: 1.15rem; margin-bottom: 2.5rem;">{{ value.text }}</p>
-    <a href="{{ value.button_url }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2.2rem;">{{ value.button_text }} →</a>
+<section class="cta-section">
+  <div class="cta-glow-mesh"></div>
+  <div class="container cta-container">
+    <div class="cta-inner-card">
+      <div class="section-tag">
+        <span class="live-dot"></span>
+        Ready to Execute
+      </div>
+      <h2 class="cta-title">{{ value.title }}</h2>
+      <p class="cta-text">
+        {% if value.subtitle %}{{ value.subtitle }}{% elif value.text %}{{ value.text }}{% else %}Partner with Datum Metrics for modern Web Development, resilient SaaS architectures, and enterprise Cyber-Security.{% endif %}
+      </p>
+
+      <div class="cta-actions-group">
+        <a href="{{ value.button_url }}" class="btn btn-hero-primary cta-main-btn">
+          <span>{{ value.button_text }}</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/services/" class="btn btn-hero-secondary">Explore All 6 Services</a>
+      </div>
+
+      <div class="cta-guarantees">
+        <div class="guarantee-item">
+          <span class="g-icon">&check;</span>
+          <span>SLA-backed delivery</span>
+        </div>
+        <div class="guarantee-item">
+          <span class="g-icon">&check;</span>
+          <span>Zero-trust security audit</span>
+        </div>
+        <div class="guarantee-item">
+          <span class="g-icon">&check;</span>
+          <span>Fixed milestone pricing</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
