@@ -43,7 +43,207 @@ class Command(BaseCommand):
         root_page = Page.objects.get(id=1)
 
         # 3. Create or update HomePage
-        home_page = HomePage.objects.filter(slug="home").first()
+        home_page = HomePage.objects.first()
+        body_data = [
+            (
+                "hero",
+                {
+                    "metric_badge": "Data-Driven Engineering & Cloud Solutions",
+                    "title": "Build Fast. Scale Securely. Measure Everything.",
+                    "subtitle": "Datum Metrics delivers high-performance Web Development, multi-tenant SaaS platforms, bulletproof Cyber-Security, and real-time Data Analytics.",
+                    "primary_cta_text": "Explore Services",
+                    "primary_cta_url": "/services/",
+                    "secondary_cta_text": "Schedule Consultation",
+                    "secondary_cta_url": "/contact/",
+                },
+            ),
+            (
+                "stats_counter",
+                {
+                    "title": "Engineering Precision & Measured Business Impact",
+                    "subtitle": "Built for enterprise reliability, high-speed data pipelines, and zero-compromise security.",
+                    "stats": [
+                        {
+                            "number": "99.999%",
+                            "label": "Platform & Service Uptime",
+                            "description": "High-availability SLA guaranteed",
+                            "icon": "layers",
+                        },
+                        {
+                            "number": "10B+",
+                            "label": "Data Points Processed Daily",
+                            "description": "Sub-millisecond pipeline latency",
+                            "icon": "database",
+                        },
+                        {
+                            "number": "Zero",
+                            "label": "Security Incident Record",
+                            "description": "ISO 27001 & SOC-2 compliance",
+                            "icon": "shield",
+                        },
+                        {
+                            "number": "+340%",
+                            "label": "Average Client ROI",
+                            "description": "Efficiency boost within 90 days",
+                            "icon": "cpu",
+                        },
+                    ],
+                },
+            ),
+            (
+                "services_grid",
+                {
+                    "title": "Core Technical Capabilities",
+                    "subtitle": "Modern software engineering and data solutions tailored to scale your enterprise.",
+                    "services": [
+                        {
+                            "title": "High-Performance Web Development",
+                            "category": "Web Development",
+                            "badge": "Popular",
+                            "description": "Custom, lightning-fast web applications built with Wagtail CMS, Django, and modern front-end frameworks.",
+                            "icon": "globe",
+                            "features": [
+                                "Custom Wagtail CMS & Headless Architecture",
+                                "Sub-second Largest Contentful Paint (LCP)",
+                                "SEO & Accessibility Optimized",
+                                "Seamless API & Database Integrations",
+                            ],
+                            "link_url": "/services/web-development/",
+                        },
+                        {
+                            "title": "Software as a Service (SaaS) Platforms",
+                            "category": "SaaS Platform",
+                            "badge": "Scalable",
+                            "description": "End-to-end multi-tenant SaaS architecture design, subscription billing integration, and cloud-native auto-scaling.",
+                            "icon": "cloud-saas",
+                            "features": [
+                                "Multi-Tenant Tenant Isolation",
+                                "Stripe & Enterprise Billing Integration",
+                                "Role-Based Access Control (RBAC)",
+                                "High-Throughput REST & GraphQL APIs",
+                            ],
+                            "link_url": "/services/software-as-a-service/",
+                        },
+                        {
+                            "title": "Enterprise Cyber-Security & Auditing",
+                            "category": "Cyber-Security",
+                            "badge": "Mission Critical",
+                            "description": "Zero-trust security models, automated vulnerability scanning, pen-testing, and compliance enforcement.",
+                            "icon": "shield-check",
+                            "features": [
+                                "Zero-Trust Architecture & Identity",
+                                "Automated Threat Detection & Logging",
+                                "ISO 27001, SOC-2 & GDPR Compliance",
+                                "Code & Infrastructure Vulnerability Audits",
+                            ],
+                            "link_url": "/services/cyber-security/",
+                        },
+                        {
+                            "title": "Data Analytics & Business Intelligence",
+                            "category": "Data Analytics & BI",
+                            "badge": "Insight",
+                            "description": "Turn raw data into actionable growth metrics with real-time stream processing, ETL pipelines, and executive dashboards.",
+                            "icon": "bar-chart",
+                            "features": [
+                                "Real-time ETL / ELT Data Pipelines",
+                                "Executive BI Dashboards",
+                                "Predictive Churn & Growth Analytics",
+                                "Warehouse Integration (Snowflake, BigQuery)",
+                            ],
+                            "link_url": "/services/data-analytics-bi/",
+                        },
+                        {
+                            "title": "Custom Artificial Intelligence & ML",
+                            "category": "AI / Machine Learning",
+                            "badge": "Advanced",
+                            "description": "Leverage tailored machine learning models, natural language processing, and automated decision engines.",
+                            "icon": "brain",
+                            "features": [
+                                "Custom Predictive AI Models",
+                                "LLM Fine-tuning & RAG Pipelines",
+                                "Automated Document & Image Processing",
+                                "MLOps Pipeline Automation",
+                            ],
+                            "link_url": "/services/ai-machine-learning/",
+                        },
+                        {
+                            "title": "Cloud Infrastructure & DevOps",
+                            "category": "Cloud Infrastructure",
+                            "badge": "Infrastructure",
+                            "description": "Robust AWS, GCP, and Kubernetes cloud architecture with automated CI/CD pipelines and infrastructure as code.",
+                            "icon": "server",
+                            "features": [
+                                "Terraform & Infrastructure as Code",
+                                "Kubernetes & Docker Container Orchestration",
+                                "Automated Zero-Downtime Deployments",
+                                "Cost Optimization & Resource Monitoring",
+                            ],
+                            "link_url": "/services/cloud-infrastructure/",
+                        },
+                    ],
+                },
+            ),
+            (
+                "metrics_calculator",
+                {
+                    "title": "Interactive Platform Impact Calculator",
+                    "subtitle": "Calculate your estimated efficiency gains, latency reductions, and cost savings with Datum Metrics.",
+                },
+            ),
+            (
+                "case_studies",
+                {
+                    "title": "Client Impact & Case Studies",
+                    "subtitle": "Real results delivered for enterprise platforms and fast-growing startups.",
+                    "case_studies": [
+                        {
+                            "client_name": "FinTech Global",
+                            "project_title": "Scalable Multi-Tenant SaaS & Zero-Trust Security Upgrade",
+                            "category_tag": "SaaS & Cyber-Security",
+                            "impact_metric": "99.999% Uptime & 0 Security Breaches",
+                            "summary": "Re-engineered a global payment gateway serving over 50,000 merchants. Implemented zero-trust authentication, containerized microservices, and PCI-DSS compliance.",
+                            "link_url": "/case-studies/fintech-global-saas/",
+                        },
+                        {
+                            "client_name": "HealthData Nexus",
+                            "project_title": "Real-time Telemetry Analytics & Modern Wagtail Web Portal",
+                            "category_tag": "Web Dev & Data Analytics",
+                            "impact_metric": "10x Faster Patient Record Querying",
+                            "summary": "Delivered a HIPAA-compliant medical data portal using Wagtail CMS, processing 5M+ daily patient metrics with sub-10ms response times.",
+                            "link_url": "/case-studies/healthdata-nexus/",
+                        },
+                        {
+                            "client_name": "LogiCloud Systems",
+                            "project_title": "Automated AI Predictive Logistics & Cyber Audit",
+                            "category_tag": "AI/ML & Cyber-Security",
+                            "impact_metric": "$4.2M Annual Logistics Cost Savings",
+                            "summary": "Built a custom route optimization ML engine integrated with end-to-end telemetry encryption across 1,200 fleet vehicles.",
+                            "link_url": "/case-studies/logicloud-systems/",
+                        },
+                    ],
+                },
+            ),
+            (
+                "testimonial",
+                {
+                    "quote": "Datum Metrics transformed our digital architecture. Their team delivered a Wagtail web platform and SaaS backend that handled a 400% surge in traffic without dropping a single packet. Their cyber-security standards gave our board complete confidence.",
+                    "author": "Dr. Sarah Lin",
+                    "role": "Chief Technology Officer",
+                    "company": "Apex Global Platforms",
+                    "metric_badge": "Verified Enterprise Client",
+                },
+            ),
+            (
+                "call_to_action",
+                {
+                    "title": "Accelerate Your Digital Transformation",
+                    "text": "Partner with Datum Metrics for modern Web Development, high-scale SaaS engineering, and enterprise Cyber-Security.",
+                    "button_text": "Book a Technical Consultation",
+                    "button_url": "/contact/",
+                },
+            ),
+        ]
+
         if not home_page:
             # Delete default Wagtail welcome home page if present
             Page.objects.filter(slug="home").delete()
@@ -51,209 +251,16 @@ class Command(BaseCommand):
             home_page = HomePage(
                 title="Datum Metrics Ltd | Enterprise Web, SaaS & Data Engineering",
                 slug="home",
-                body=[
-                    (
-                        "hero",
-                        {
-                            "metric_badge": "Data-Driven Engineering & Cloud Solutions",
-                            "title": "Build Fast. Scale Securely. Measure Everything.",
-                            "subtitle": "Datum Metrics delivers high-performance Web Development, multi-tenant SaaS platforms, bulletproof Cyber-Security, and real-time Data Analytics.",
-                            "primary_cta_text": "Explore Services",
-                            "primary_cta_url": "#services",
-                            "secondary_cta_text": "Schedule Consultation",
-                            "secondary_cta_url": "#contact",
-                        },
-                    ),
-                    (
-                        "stats_counter",
-                        {
-                            "title": "Engineering Precision & Measured Business Impact",
-                            "subtitle": "Built for enterprise reliability, high-speed data pipelines, and zero-compromise security.",
-                            "stats": [
-                                {
-                                    "number": "99.99%",
-                                    "label": "Platform & Service Uptime",
-                                    "description": "High-availability SLA guaranteed",
-                                    "icon": "layers",
-                                },
-                                {
-                                    "number": "10B+",
-                                    "label": "Data Points Processed Daily",
-                                    "description": "Sub-millisecond pipeline latency",
-                                    "icon": "database",
-                                },
-                                {
-                                    "number": "Zero",
-                                    "label": "Security Incident Record",
-                                    "description": "ISO 27001 & SOC-2 compliance",
-                                    "icon": "shield",
-                                },
-                                {
-                                    "number": "+320%",
-                                    "label": "Average Client ROI",
-                                    "description": "Efficiency boost within 90 days",
-                                    "icon": "cpu",
-                                },
-                            ],
-                        },
-                    ),
-                    (
-                        "services_grid",
-                        {
-                            "title": "Core Technical Capabilities",
-                            "subtitle": "Modern software engineering and data solutions tailored to scale your enterprise.",
-                            "services": [
-                                {
-                                    "title": "High-Performance Web Development",
-                                    "category": "Web Development",
-                                    "badge": "Popular",
-                                    "description": "Custom, lightning-fast web applications built with Wagtail CMS, Django, and modern modern front-end frameworks.",
-                                    "icon": "globe",
-                                    "features": [
-                                        "Custom Wagtail CMS & Headless Architecture",
-                                        "Sub-second Largest Contentful Paint (LCP)",
-                                        "SEO & Accessibility Optimized",
-                                        "Seamless API & Database Integrations",
-                                    ],
-                                    "link_url": "/services/web-development/",
-                                },
-                                {
-                                    "title": "Software as a Service (SaaS) Platforms",
-                                    "category": "SaaS Platform",
-                                    "badge": "Scalable",
-                                    "description": "End-to-end multi-tenant SaaS architecture design, subscription billing integration, and cloud-native auto-scaling.",
-                                    "icon": "cloud-saas",
-                                    "features": [
-                                        "Multi-Tenant Tenant Isolation",
-                                        "Stripe & Enterprise Billing Integration",
-                                        "Role-Based Access Control (RBAC)",
-                                        "High-Throughput REST & GraphQL APIs",
-                                    ],
-                                    "link_url": "/services/software-as-a-service/",
-                                },
-                                {
-                                    "title": "Enterprise Cyber-Security & Auditing",
-                                    "category": "Cyber-Security",
-                                    "badge": "Mission Critical",
-                                    "description": "Zero-trust security models, automated vulnerability scanning, pen-testing, and compliance enforcement.",
-                                    "icon": "shield-check",
-                                    "features": [
-                                        "Zero-Trust Architecture & Identity",
-                                        "Automated Threat Detection & Logging",
-                                        "ISO 27001, SOC-2 & GDPR Compliance",
-                                        "Code & Infrastructure Vulnerability Audits",
-                                    ],
-                                    "link_url": "/services/cyber-security/",
-                                },
-                                {
-                                    "title": "Data Analytics & Business Intelligence",
-                                    "category": "Data Analytics & BI",
-                                    "badge": "Insight",
-                                    "description": "Turn raw data into actionable growth metrics with real-time stream processing, ETL pipelines, and executive dashboards.",
-                                    "icon": "bar-chart",
-                                    "features": [
-                                        "Real-time ETL / ELT Data Pipelines",
-                                        "Executive BI Dashboards",
-                                        "Predictive Churn & Growth Analytics",
-                                        "Warehouse Integration (Snowflake, BigQuery)",
-                                    ],
-                                    "link_url": "/services/data-analytics-bi/",
-                                },
-                                {
-                                    "title": "Custom Artificial Intelligence & ML",
-                                    "category": "AI / Machine Learning",
-                                    "badge": "Advanced",
-                                    "description": "Leverage tailored machine learning models, natural language processing, and automated decision engines.",
-                                    "icon": "brain",
-                                    "features": [
-                                        "Custom Predictive AI Models",
-                                        "LLM Fine-tuning & RAG Pipelines",
-                                        "Automated Document & Image Processing",
-                                        "MLOps Pipeline Automation",
-                                    ],
-                                    "link_url": "/services/ai-machine-learning/",
-                                },
-                                {
-                                    "title": "Cloud Infrastructure & DevOps",
-                                    "category": "Cloud Infrastructure",
-                                    "badge": "Infrastructure",
-                                    "description": "Robust AWS, GCP, and Kubernetes cloud architecture with automated CI/CD pipelines and infrastructure as code.",
-                                    "icon": "server",
-                                    "features": [
-                                        "Terraform & Infrastructure as Code",
-                                        "Kubernetes & Docker Container Orchestration",
-                                        "Automated Zero-Downtime Deployments",
-                                        "Cost Optimization & Resource Monitoring",
-                                    ],
-                                    "link_url": "/services/cloud-infrastructure/",
-                                },
-                            ],
-                        },
-                    ),
-                    (
-                        "metrics_calculator",
-                        {
-                            "title": "Interactive Platform Impact Calculator",
-                            "subtitle": "Calculate your estimated efficiency gains, latency reductions, and cost savings with Datum Metrics.",
-                        },
-                    ),
-                    (
-                        "case_studies",
-                        {
-                            "title": "Client Impact & Case Studies",
-                            "subtitle": "Real results delivered for enterprise platforms and fast-growing startups.",
-                            "case_studies": [
-                                {
-                                    "client_name": "FinTech Global",
-                                    "project_title": "Scalable Multi-Tenant SaaS & Zero-Trust Security Upgrade",
-                                    "category_tag": "SaaS & Cyber-Security",
-                                    "impact_metric": "99.999% Uptime & 0 Security Breaches",
-                                    "summary": "Re-engineered a global payment gateway serving over 50,000 merchants. Implemented zero-trust authentication, containerized microservices, and PCI-DSS compliance.",
-                                    "link_url": "/case-studies/fintech-global-saas/",
-                                },
-                                {
-                                    "client_name": "HealthData Nexus",
-                                    "project_title": "Real-time Telemetry Analytics & Modern Wagtail Web Portal",
-                                    "category_tag": "Web Dev & Data Analytics",
-                                    "impact_metric": "10x Faster Patient Record Querying",
-                                    "summary": "Delivered a HIPAA-compliant medical data portal using Wagtail CMS, processing 5M+ daily patient metrics with sub-10ms response times.",
-                                    "link_url": "/case-studies/healthdata-nexus/",
-                                },
-                                {
-                                    "client_name": "LogiCloud Systems",
-                                    "project_title": "Automated AI Predictive Logistics & Cyber Audit",
-                                    "category_tag": "AI/ML & Cyber-Security",
-                                    "impact_metric": "$4.2M Annual Logistics Cost Savings",
-                                    "summary": "Built a custom route optimization ML engine integrated with end-to-end telemetry encryption across 1,200 fleet vehicles.",
-                                    "link_url": "/case-studies/logicloud-systems/",
-                                },
-                            ],
-                        },
-                    ),
-                    (
-                        "testimonial",
-                        {
-                            "quote": "Datum Metrics transformed our digital architecture. Their team delivered a Wagtail web platform and SaaS backend that handled a 400% surge in traffic without dropping a single packet. Their cyber-security standards gave our board complete confidence.",
-                            "author": "Dr. Sarah Lin",
-                            "role": "Chief Technology Officer",
-                            "company": "Apex Global Platforms",
-                            "metric_badge": "Verified Enterprise Client",
-                        },
-                    ),
-                    (
-                        "call_to_action",
-                        {
-                            "title": "Accelerate Your Digital Transformation",
-                            "subtitle": "Partner with Datum Metrics for modern Web Development, high-scale SaaS engineering, and enterprise Cyber-Security.",
-                            "button_text": "Book a Technical Consultation",
-                            "button_url": "#contact",
-                        },
-                    ),
-                ],
+                body=body_data,
             )
             root_page.add_child(instance=home_page)
-            home_page.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS("Created and published HomePage"))
+        else:
+            home_page.body = body_data
+            home_page.title = "Datum Metrics Ltd | Enterprise Web, SaaS & Data Engineering"
+            home_page.save()
+
+        home_page.save_revision().publish()
+        self.stdout.write(self.style.SUCCESS("Created/Updated and published HomePage with full content"))
 
         # Update Wagtail Site to point to HomePage
         site = Site.objects.first()
