@@ -24,22 +24,15 @@ BASE_DIR = PROJECT_DIR.parent
 # Application definition
 
 INSTALLED_APPS = [
+    # Unfold — must be declared before django.contrib.admin
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+
     "home",
-    "search",
-    "wagtail.contrib.forms",
-    "wagtail.contrib.redirects",
-    "wagtail.embeds",
-    "wagtail.sites",
-    "wagtail.users",
-    "wagtail.snippets",
-    "wagtail.documents",
-    "wagtail.images",
-    "wagtail.search",
-    "wagtail.admin",
-    "wagtail",
-    "modelcluster",
-    "taggit",
+    "rest_framework",
     "django_filters",
+    "inertia",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -56,7 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "inertia.middleware.InertiaMiddleware",
 ]
 
 ROOT_URLCONF = "datum_metrics.urls"
@@ -169,27 +162,158 @@ STORAGES = {
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 
 
-# Wagtail settings
+# Inertia Settings
+INERTIA_LAYOUT = "base_inertia.html"
 
-WAGTAIL_SITE_NAME = "datum_metrics"
-
-# Search
-# https://docs.wagtail.org/en/stable/topics/search/backends.html
-WAGTAILSEARCH_BACKENDS = {
-    "default": {
-        "BACKEND": "wagtail.search.backends.database",
-    }
+# Django REST Framework Settings
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 12,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ],
 }
 
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
 
-# Allowed file extensions for documents in the document library.
-# This can be omitted to allow all files, but note that this may present a security risk
-# if untrusted users are allowed to upload files -
-# see https://docs.wagtail.org/en/stable/advanced_topics/deploying.html#user-uploaded-files
-WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
+# ---------------------------------------------------------------------------
+# Unfold Admin Configuration
+# https://unfoldadmin.com/docs/configuration/settings/
+# ---------------------------------------------------------------------------
 
-# Maximum upload size for documents in bytes.
-WAGTAILDOCS_MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
+from django.templatetags.static import static  # noqa: E402
+from django.urls import reverse_lazy           # noqa: E402
+
+UNFOLD = {
+    "SITE_TITLE": "Datum Metrics",
+    "SITE_HEADER": "Datum Metrics Admin",
+    "SITE_URL": "/",
+    # Square icon used in browser tab + sidebar collapsed state
+    "SITE_ICON": {
+        "light": lambda request: static("admin/img/dm_icon.svg"),
+        "dark":  lambda request: static("admin/img/dm_icon.svg"),
+    },
+    # Full horizontal wordmark logo used in expanded sidebar
+    "SITE_LOGO": {
+        "light": lambda request: static("admin/img/dm_logo_light.svg"),
+        "dark":  lambda request: static("admin/img/dm_logo_dark.svg"),
+    },
+    "SITE_SYMBOL": "bar_chart",
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
+    "ENVIRONMENT": "datum_metrics.admin_helpers.environment_callback",
+    "DASHBOARD_CALLBACK": "datum_metrics.admin_helpers.dashboard_callback",
+    "THEME": "dark",
+    "COLORS": {
+        "font": {
+            "subtle-light": "107 114 128",
+            "subtle-dark":  "156 163 175",
+            "default-light": "17 24 39",
+            "default-dark":  "243 244 246",
+        },
+        # Brand-red primary palette
+        "primary": {
+            "50":  "255 245 245",
+            "100": "254 226 226",
+            "200": "254 202 202",
+            "300": "252 165 165",
+            "400": "248 113 113",
+            "500": "239 68 68",
+            "600": "220 38 38",
+            "700": "185 28 28",
+            "800": "153 27 27",
+            "900": "127 29 29",
+            "950": "69 10 10",
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": "Content",
+                "separator": True,
+                "collapsible": False,
+                "items": [
+                    {
+                        "title": "Site Settings",
+                        "icon": "settings",
+                        "link": reverse_lazy("admin:home_sitesettings_changelist"),
+                    },
+                    {
+                        "title": "Blog Posts",
+                        "icon": "article",
+                        "link": reverse_lazy("admin:home_blogpost_changelist"),
+                        "badge": "home.admin_helpers.blogpost_badge",
+                    },
+                    {
+                        "title": "Services",
+                        "icon": "handyman",
+                        "link": reverse_lazy("admin:home_service_changelist"),
+                    },
+                    {
+                        "title": "Case Studies",
+                        "icon": "cases",
+                        "link": reverse_lazy("admin:home_casestudy_changelist"),
+                    },
+                    {
+                        "title": "Testimonials",
+                        "icon": "format_quote",
+                        "link": reverse_lazy("admin:home_testimonial_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Metrics & Partners",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Company Metrics",
+                        "icon": "bar_chart",
+                        "link": reverse_lazy("admin:home_companymetric_changelist"),
+                    },
+                    {
+                        "title": "Tech Partners",
+                        "icon": "hub",
+                        "link": reverse_lazy("admin:home_techpartner_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Leads",
+                "separator": True,
+                "collapsible": False,
+                "items": [
+                    {
+                        "title": "Contact Inquiries",
+                        "icon": "mail",
+                        "link": reverse_lazy("admin:home_contactinquiry_changelist"),
+                        "badge": "home.admin_helpers.new_inquiries_badge",
+                    },
+                ],
+            },
+            {
+                "title": "Authentication",
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": "Users",
+                        "icon": "person",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                    },
+                    {
+                        "title": "Groups",
+                        "icon": "group",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
+}

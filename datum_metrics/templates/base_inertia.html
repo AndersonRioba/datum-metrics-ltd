@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datum Metrics Ltd | Enterprise Web Development, SaaS & Cyber-Security</title>
+  <meta name="description" content="Datum Metrics Ltd delivers high-performance enterprise Web Development, multi-tenant SaaS platforms, bulletproof Cyber-Security, and real-time Data Analytics.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="{% static 'dist/assets/main.css' %}">
+  {% csrf_token %}
+</head>
+<body>
+  {% block inertia %}
+  {% endblock %}
+  
+  <script type="module" src="{% static 'dist/assets/main.js' %}"></script>
+</body>
+</html>

@@ -1,29 +1,25 @@
 from datetime import date
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from wagtail.models import Page, Site
 from home.models import (
-    HomePage,
-    ServiceIndexPage,
-    ServicePage,
-    CaseStudyIndexPage,
-    CaseStudyPage,
-    BlogIndexPage,
-    BlogPage,
-    ContactPage,
-    FormField,
+    CompanyMetric,
+    Service,
+    CaseStudy,
+    BlogPost,
+    Testimonial,
+    ContactInquiry,
 )
 
 User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = "Seed Datum Metrics Ltd Wagtail CMS database with rich initial pages and content."
+    help = "Seed Datum Metrics Ltd Pure Django database with rich initial enterprise data."
 
     def handle(self, *args, **options):
-        self.stdout.write("Starting Datum Metrics Wagtail content seeding...")
+        self.stdout.write("Starting Datum Metrics data seeding...")
 
-        # 1. Create or update admin superuser
+        # 1. Superuser
         admin_user, created = User.objects.get_or_create(
             username="admin",
             defaults={
@@ -39,434 +35,272 @@ class Command(BaseCommand):
         else:
             self.stdout.write("Updated admin user password.")
 
-        # 2. Get root page
-        root_page = Page.objects.get(id=1)
-
-        # 3. Create or update HomePage
-        home_page = HomePage.objects.first()
-        body_data = [
-            (
-                "hero",
-                {
-                    "metric_badge": "Data-Driven Engineering & Cloud Solutions",
-                    "title": "Build Fast. Scale Securely. Measure Everything.",
-                    "subtitle": "Datum Metrics delivers high-performance Web Development, multi-tenant SaaS platforms, bulletproof Cyber-Security, and real-time Data Analytics.",
-                    "primary_cta_text": "Explore Services",
-                    "primary_cta_url": "/services/",
-                    "secondary_cta_text": "Schedule Consultation",
-                    "secondary_cta_url": "/contact/",
-                },
-            ),
-            (
-                "stats_counter",
-                {
-                    "title": "Engineering Precision & Measured Business Impact",
-                    "subtitle": "Built for enterprise reliability, high-speed data pipelines, and zero-compromise security.",
-                    "stats": [
-                        {
-                            "number": "99.999%",
-                            "label": "Platform & Service Uptime",
-                            "description": "High-availability SLA guaranteed",
-                            "icon": "layers",
-                        },
-                        {
-                            "number": "10B+",
-                            "label": "Data Points Processed Daily",
-                            "description": "Sub-millisecond pipeline latency",
-                            "icon": "database",
-                        },
-                        {
-                            "number": "Zero",
-                            "label": "Security Incident Record",
-                            "description": "ISO 27001 & SOC-2 compliance",
-                            "icon": "shield",
-                        },
-                        {
-                            "number": "+340%",
-                            "label": "Average Client ROI",
-                            "description": "Efficiency boost within 90 days",
-                            "icon": "cpu",
-                        },
-                    ],
-                },
-            ),
-            (
-                "services_grid",
-                {
-                    "title": "Core Technical Capabilities",
-                    "subtitle": "Modern software engineering and data solutions tailored to scale your enterprise.",
-                    "services": [
-                        {
-                            "title": "High-Performance Web Development",
-                            "category": "Web Development",
-                            "badge": "Popular",
-                            "description": "Custom, lightning-fast web applications built with Wagtail CMS, Django, and modern front-end frameworks.",
-                            "icon": "globe",
-                            "features": [
-                                "Custom Wagtail CMS & Headless Architecture",
-                                "Sub-second Largest Contentful Paint (LCP)",
-                                "SEO & Accessibility Optimized",
-                                "Seamless API & Database Integrations",
-                            ],
-                            "link_url": "/services/web-development/",
-                        },
-                        {
-                            "title": "Software as a Service (SaaS) Platforms",
-                            "category": "SaaS Platform",
-                            "badge": "Scalable",
-                            "description": "End-to-end multi-tenant SaaS architecture design, subscription billing integration, and cloud-native auto-scaling.",
-                            "icon": "cloud-saas",
-                            "features": [
-                                "Multi-Tenant Tenant Isolation",
-                                "Stripe & Enterprise Billing Integration",
-                                "Role-Based Access Control (RBAC)",
-                                "High-Throughput REST & GraphQL APIs",
-                            ],
-                            "link_url": "/services/software-as-a-service/",
-                        },
-                        {
-                            "title": "Enterprise Cyber-Security & Auditing",
-                            "category": "Cyber-Security",
-                            "badge": "Mission Critical",
-                            "description": "Zero-trust security models, automated vulnerability scanning, pen-testing, and compliance enforcement.",
-                            "icon": "shield-check",
-                            "features": [
-                                "Zero-Trust Architecture & Identity",
-                                "Automated Threat Detection & Logging",
-                                "ISO 27001, SOC-2 & GDPR Compliance",
-                                "Code & Infrastructure Vulnerability Audits",
-                            ],
-                            "link_url": "/services/cyber-security/",
-                        },
-                        {
-                            "title": "Data Analytics & Business Intelligence",
-                            "category": "Data Analytics & BI",
-                            "badge": "Insight",
-                            "description": "Turn raw data into actionable growth metrics with real-time stream processing, ETL pipelines, and executive dashboards.",
-                            "icon": "bar-chart",
-                            "features": [
-                                "Real-time ETL / ELT Data Pipelines",
-                                "Executive BI Dashboards",
-                                "Predictive Churn & Growth Analytics",
-                                "Warehouse Integration (Snowflake, BigQuery)",
-                            ],
-                            "link_url": "/services/data-analytics-bi/",
-                        },
-                        {
-                            "title": "Custom Artificial Intelligence & ML",
-                            "category": "AI / Machine Learning",
-                            "badge": "Advanced",
-                            "description": "Leverage tailored machine learning models, natural language processing, and automated decision engines.",
-                            "icon": "brain",
-                            "features": [
-                                "Custom Predictive AI Models",
-                                "LLM Fine-tuning & RAG Pipelines",
-                                "Automated Document & Image Processing",
-                                "MLOps Pipeline Automation",
-                            ],
-                            "link_url": "/services/ai-machine-learning/",
-                        },
-                        {
-                            "title": "Cloud Infrastructure & DevOps",
-                            "category": "Cloud Infrastructure",
-                            "badge": "Infrastructure",
-                            "description": "Robust AWS, GCP, and Kubernetes cloud architecture with automated CI/CD pipelines and infrastructure as code.",
-                            "icon": "server",
-                            "features": [
-                                "Terraform & Infrastructure as Code",
-                                "Kubernetes & Docker Container Orchestration",
-                                "Automated Zero-Downtime Deployments",
-                                "Cost Optimization & Resource Monitoring",
-                            ],
-                            "link_url": "/services/cloud-infrastructure/",
-                        },
-                    ],
-                },
-            ),
-            (
-                "metrics_calculator",
-                {
-                    "title": "Interactive Platform Impact Calculator",
-                    "subtitle": "Calculate your estimated efficiency gains, latency reductions, and cost savings with Datum Metrics.",
-                },
-            ),
-            (
-                "case_studies",
-                {
-                    "title": "Client Impact & Case Studies",
-                    "subtitle": "Real results delivered for enterprise platforms and fast-growing startups.",
-                    "case_studies": [
-                        {
-                            "client_name": "FinTech Global",
-                            "project_title": "Scalable Multi-Tenant SaaS & Zero-Trust Security Upgrade",
-                            "category_tag": "SaaS & Cyber-Security",
-                            "impact_metric": "99.999% Uptime & 0 Security Breaches",
-                            "summary": "Re-engineered a global payment gateway serving over 50,000 merchants. Implemented zero-trust authentication, containerized microservices, and PCI-DSS compliance.",
-                            "link_url": "/case-studies/fintech-global-saas/",
-                        },
-                        {
-                            "client_name": "HealthData Nexus",
-                            "project_title": "Real-time Telemetry Analytics & Modern Wagtail Web Portal",
-                            "category_tag": "Web Dev & Data Analytics",
-                            "impact_metric": "10x Faster Patient Record Querying",
-                            "summary": "Delivered a HIPAA-compliant medical data portal using Wagtail CMS, processing 5M+ daily patient metrics with sub-10ms response times.",
-                            "link_url": "/case-studies/healthdata-nexus/",
-                        },
-                        {
-                            "client_name": "LogiCloud Systems",
-                            "project_title": "Automated AI Predictive Logistics & Cyber Audit",
-                            "category_tag": "AI/ML & Cyber-Security",
-                            "impact_metric": "$4.2M Annual Logistics Cost Savings",
-                            "summary": "Built a custom route optimization ML engine integrated with end-to-end telemetry encryption across 1,200 fleet vehicles.",
-                            "link_url": "/case-studies/logicloud-systems/",
-                        },
-                    ],
-                },
-            ),
-            (
-                "testimonial",
-                {
-                    "quote": "Datum Metrics transformed our digital architecture. Their team delivered a Wagtail web platform and SaaS backend that handled a 400% surge in traffic without dropping a single packet. Their cyber-security standards gave our board complete confidence.",
-                    "author": "Dr. Sarah Lin",
-                    "role": "Chief Technology Officer",
-                    "company": "Apex Global Platforms",
-                    "metric_badge": "Verified Enterprise Client",
-                },
-            ),
-            (
-                "call_to_action",
-                {
-                    "title": "Accelerate Your Digital Transformation",
-                    "text": "Partner with Datum Metrics for modern Web Development, high-scale SaaS engineering, and enterprise Cyber-Security.",
-                    "button_text": "Book a Technical Consultation",
-                    "button_url": "/contact/",
-                },
-            ),
+        # 2. Seed Company Metrics
+        metrics_data = [
+            {"number": "99.995%", "label": "Enterprise SLA Uptime", "description": "Continuous zero-downtime microservice clusters with active failover.", "icon": "shield", "order": 1},
+            {"number": "1.2B+", "label": "Telemetry Events / Day", "description": "Sub-millisecond processing pipelines with Kafka & Redis.", "icon": "database", "order": 2},
+            {"number": "340%", "label": "Avg. Client Throughput Boost", "description": "Engineered caching, async ASGI, and database optimizations.", "icon": "cpu", "order": 3},
+            {"number": "0", "label": "Security Breach Incidents", "description": "SOC2 & ISO 27001 compliant zero-trust architectures.", "icon": "shield", "order": 4},
         ]
-
-        if not home_page:
-            # Delete default Wagtail welcome home page if present
-            Page.objects.filter(slug="home").delete()
-
-            home_page = HomePage(
-                title="Datum Metrics Ltd | Enterprise Web, SaaS & Data Engineering",
-                slug="home",
-                body=body_data,
+        for item in metrics_data:
+            CompanyMetric.objects.update_or_create(
+                label=item["label"],
+                defaults=item,
             )
-            root_page.add_child(instance=home_page)
-        else:
-            home_page.body = body_data
-            home_page.title = "Datum Metrics Ltd | Enterprise Web, SaaS & Data Engineering"
-            home_page.save()
+        self.stdout.write(self.style.SUCCESS(f"Seeded {len(metrics_data)} company metrics."))
 
-        home_page.save_revision().publish()
-        self.stdout.write(self.style.SUCCESS("Created/Updated and published HomePage with full content"))
-
-        # Update Wagtail Site to point to HomePage
-        site = Site.objects.first()
-        if site:
-            site.root_page = home_page
-            site.site_name = "Datum Metrics Ltd"
-            site.save()
-
-        # 4. Service Index Page & Services
-        service_index = ServiceIndexPage.objects.filter(slug="services").first()
-        if not service_index:
-            service_index = ServiceIndexPage(
-                title="Our Engineering & Software Services",
-                slug="services",
-                intro="<p>Datum Metrics offers end-to-end digital solutions spanning modern web development, multi-tenant SaaS platforms, enterprise cyber-security, and high-performance data analytics.</p>",
+        # 3. Seed Services
+        services_data = [
+            {
+                "title": "Enterprise Web Development",
+                "slug": "web-development",
+                "category": "Web Development",
+                "badge": "High Concurrency",
+                "summary": "Custom full-stack web applications engineered with Python/Django, Inertia.js, React, and PostgreSQL for maximum throughput, resilience, and maintainability.",
+                "description": "Our web applications are built from the ground up for high traffic and uncompromising reliability. We leverage modern reactive frontends connected directly to robust Django and REST backends.",
+                "tech_stack": "Python, Django, React, Inertia.js, PostgreSQL, Docker, Redis",
+                "icon": "globe",
+                "features": [
+                    "Full-stack SSR & SPA architecture with Inertia.js & React",
+                    "Robust REST API and GraphQL backend integrations",
+                    "Automated CI/CD deployment pipelines to Docker and Kubernetes",
+                    "Comprehensive unit, integration, and load testing",
+                ],
+                "is_featured": True,
+                "order": 1,
+            },
+            {
+                "title": "Multi-Tenant SaaS Engineering",
+                "slug": "software-as-a-service",
+                "category": "SaaS Platform",
+                "badge": "Scalable Multi-Tenant",
+                "summary": "Architecting resilient, tenant-isolated cloud SaaS platforms with subscription billing, granular role-based access, and enterprise single sign-on (SSO).",
+                "description": "Scale your software from startup to Fortune 500 with our battle-tested multi-tenant isolation patterns, automated tenant provisioning, and usage-based metering.",
+                "tech_stack": "Django Tenant Schemas, Celery, Stripe Billing, SAML/SSO, AWS ECS",
+                "icon": "cloud-saas",
+                "features": [
+                    "Dynamic tenant isolation via database schemas or row-level security",
+                    "Automated subscription lifecycle, metering, and Stripe integrations",
+                    "Enterprise SAML 2.0 / OAuth2 / Okta SSO authentication",
+                    "Asynchronous background task processing with Celery & Redis",
+                ],
+                "is_featured": True,
+                "order": 2,
+            },
+            {
+                "title": "Zero-Trust Cyber-Security & Audits",
+                "slug": "cyber-security",
+                "category": "Cyber-Security",
+                "badge": "SOC2 & ISO Ready",
+                "summary": "Comprehensive penetration testing, vulnerability assessments, automated threat detection, and end-to-end data encryption for mission-critical infrastructure.",
+                "description": "Protect your company against emerging cyber threats with our military-grade security posture assessments, automated code analysis, and intrusion prevention systems.",
+                "tech_stack": "OWASP Top 10, Zero-Trust, TLS 1.3, Vault, ModSecurity, SIEM",
+                "icon": "shield-check",
+                "features": [
+                    "Full-scope penetration testing and automated vulnerability scanning",
+                    "Zero-trust network architecture and secrets management with HashiCorp Vault",
+                    "WAF, DDoS mitigation, and continuous threat monitoring",
+                    "Compliance alignment with SOC2 Type II, ISO 27001, and GDPR",
+                ],
+                "is_featured": True,
+                "order": 3,
+            },
+            {
+                "title": "Real-Time Data Analytics & BI",
+                "slug": "data-analytics-bi",
+                "category": "Data Analytics",
+                "badge": "Sub-Second Ingestion",
+                "summary": "Building scalable data lakehouses, real-time streaming ETL pipelines, and executive dashboards that transform complex metrics into actionable revenue insights.",
+                "description": "Harness the power of streaming big data. We design low-latency analytics pipelines capable of processing millions of events per second with interactive visualizations.",
+                "tech_stack": "Apache Kafka, ClickHouse, Apache Spark, PostgreSQL, Grafana",
+                "icon": "bar-chart",
+                "features": [
+                    "High-volume event streaming with Apache Kafka and ClickHouse",
+                    "Custom interactive executive analytics dashboards and KPI monitors",
+                    "Automated ETL pipelines with anomaly detection and automated alerts",
+                    "Data warehousing with sub-second aggregate query latency",
+                ],
+                "is_featured": True,
+                "order": 4,
+            },
+            {
+                "title": "Applied AI & Machine Learning",
+                "slug": "ai-machine-learning",
+                "category": "Artificial Intelligence",
+                "badge": "LLM & Predictive Ops",
+                "summary": "Deploying production-ready predictive models, intelligent LLM agents, and automated data extraction pipelines integrated securely with your private databases.",
+                "description": "Integrate intelligent autonomous capabilities into your business workflows. We fine-tune LLMs, build RAG pipelines over your private data, and deploy predictive scoring engines.",
+                "tech_stack": "PyTorch, LangChain, OpenAI API, Vector DBs (Chroma/pgvector), FastAPI",
+                "icon": "brain",
+                "features": [
+                    "Custom Retrieval-Augmented Generation (RAG) on enterprise knowledge bases",
+                    "Predictive churn, demand forecasting, and risk scoring models",
+                    "Private and on-premise LLM inference pipelines with zero data leakage",
+                    "Automated document understanding and unstructured data extraction",
+                ],
+                "is_featured": True,
+                "order": 5,
+            },
+            {
+                "title": "Cloud Infrastructure & DevOps",
+                "slug": "cloud-infrastructure",
+                "category": "Cloud & DevOps",
+                "badge": "Infrastructure as Code",
+                "summary": "Cloud-native orchestration with Kubernetes, Terraform, and automated GitOps pipelines guaranteeing maximum availability, autoscaling, and cost efficiency.",
+                "description": "Eliminate infrastructure bottlenecks. We architect immutable infrastructure as code, automated rollouts, multi-region failovers, and cloud cost governance.",
+                "tech_stack": "AWS, GCP, Terraform, Kubernetes, GitHub Actions, Prometheus",
+                "icon": "server",
+                "features": [
+                    "Infrastructure as Code (IaC) with Terraform and Ansible",
+                    "Kubernetes container orchestration with horizontal pod autoscaling",
+                    "Zero-downtime blue/green and canary deployment pipelines",
+                    "Proactive 24/7 telemetry monitoring with Prometheus, Grafana, and Alertmanager",
+                ],
+                "is_featured": True,
+                "order": 6,
+            },
+        ]
+        for s in services_data:
+            Service.objects.update_or_create(
+                slug=s["slug"],
+                defaults=s,
             )
-            home_page.add_child(instance=service_index)
-            service_index.save_revision().publish()
+        self.stdout.write(self.style.SUCCESS(f"Seeded {len(services_data)} enterprise services."))
 
-            services_data = [
-                (
-                    "Web Development",
-                    "web-development",
-                    "High-Performance Enterprise Web Applications & Wagtail CMS",
-                    "Custom, accessible, and ultra-fast web platforms built with Wagtail CMS, Django, and modern front-end design systems. Engineered for SEO dominance and seamless content management.",
-                    "Wagtail 8, Python 3.13, Django 6, MySQL, HTML5/CSS3, JavaScript ES6, Tailwind/Custom CSS",
-                ),
-                (
-                    "Software as a Service (SaaS)",
-                    "software-as-a-service",
-                    "Scalable Multi-Tenant Cloud SaaS Platform Architecture",
-                    "Building robust, multi-tenant SaaS applications equipped with automated subscription billing, granular RBAC permissions, multi-region database scaling, and developer APIs.",
-                    "Django REST Framework, Wagtail, PostgreSQL/MySQL, Docker, Stripe, Redis, Celery",
-                ),
-                (
-                    "Cyber-Security",
-                    "cyber-security",
-                    "Zero-Trust Architecture, Vulnerability Auditing & Penetration Testing",
-                    "Protecting enterprise assets with zero-trust network boundaries, active threat detection, automated code vulnerability scans, and ISO 27001 / SOC-2 compliance enforcement.",
-                    "Zero-Trust IAM, OAuth2/OIDC, OWASP Top 10 Auditing, TLS 1.3, Vault, ModSecurity",
-                ),
-                (
-                    "Data Analytics & BI",
-                    "data-analytics-bi",
-                    "Real-Time Data Streaming, Pipeline Automation & BI Dashboards",
-                    "Transforming complex data floods into strategic business advantage through real-time stream processing, automated ETL pipelines, and interactive executive dashboards.",
-                    "Apache Kafka, PySpark, Snowflake, dbt, Metabase, Python, Pandas, MySQL",
-                ),
-                (
-                    "Artificial Intelligence & ML",
-                    "ai-machine-learning",
-                    "Custom Machine Learning Models & Automated Intelligence Engines",
-                    "Deploying custom predictive models, natural language processing pipelines, and RAG systems engineered to automate routine decisions and surface deep insights.",
-                    "PyTorch, TensorFlow, Scikit-Learn, OpenAI API, Hugging Face, MLOps, FastApi",
-                ),
-                (
-                    "Cloud Infrastructure",
-                    "cloud-infrastructure",
-                    "AWS/GCP Cloud Native Architecture & Automated DevOps CI/CD",
-                    "Architecting bulletproof cloud infrastructure using Terraform, Kubernetes, and automated CI/CD deployment pipelines for 99.99% availability.",
-                    "AWS, GCP, Kubernetes, Terraform, Docker, GitHub Actions, Prometheus, Grafana",
-                ),
-            ]
-
-            for cat, slug, title, summary, stack in services_data:
-                s_page = ServicePage(
-                    title=title,
-                    slug=slug,
-                    category=cat,
-                    summary=summary,
-                    tech_stack=stack,
-                    body=f"<h2>Why Choose Datum Metrics for {cat}?</h2><p>{summary}</p><h3>Technologies & Tools</h3><p><code>{stack}</code></p><h3>Our Approach</h3><p>We work closely with your engineering and leadership teams to architect solutions that meet strict SLA benchmarks, security standards, and business goals.</p>",
-                )
-                service_index.add_child(instance=s_page)
-                s_page.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS("Created Service Index and 6 Service Pages"))
-
-        # 5. Case Study Index & Case Studies
-        case_index = CaseStudyIndexPage.objects.filter(slug="case-studies").first()
-        if not case_index:
-            case_index = CaseStudyIndexPage(
-                title="Case Studies & Client Impact",
-                slug="case-studies",
-                intro="<p>Discover how Datum Metrics helps industry leaders engineer scalable software, lock down critical infrastructure, and leverage data analytics.</p>",
+        # 4. Seed Case Studies
+        case_studies_data = [
+            {
+                "title": "Real-Time Telemetry Pipeline & Architecture Overhaul",
+                "slug": "finscale-telemetry-pipeline",
+                "client_name": "FinScale Technologies",
+                "industry": "FinTech & Payments",
+                "category_tag": "SaaS & High-Throughput Data",
+                "impact_metric": "+420% Throughput & 80ms P99 Latency",
+                "summary": "Re-architected FinScale's monolithic transaction auditing system into an event-driven microservices architecture handling 150M daily transactions.",
+                "challenge": "FinScale's legacy transaction auditing system suffered from 1.8s database lock contention and frequent timeout cascades during market open peak volume.",
+                "solution": "Datum Metrics designed a decoupled event stream using Apache Kafka and ClickHouse backed by a resilient Django REST API cluster with Redis caching.",
+                "results": "Transaction processing latency dropped from 1.8s to under 80ms, eliminating all downtime incidents and reducing cloud infrastructure costs by 42%.",
+                "tech_stack": "Python, Django, Kafka, ClickHouse, Redis, AWS ECS",
+                "is_featured": True,
+                "order": 1,
+            },
+            {
+                "title": "Zero-Trust Security Transformation & SOC2 Certification",
+                "slug": "medishield-security-transformation",
+                "client_name": "MediShield Health Cloud",
+                "industry": "Healthcare & Life Sciences",
+                "category_tag": "Cyber-Security & Compliance",
+                "impact_metric": "100% Audit Compliance & Zero Incidents",
+                "summary": "Executed complete cybersecurity hard-lock, automated vulnerability scanners, and end-to-end HIPAA/SOC2 compliance architecture for a healthcare SaaS.",
+                "challenge": "MediShield needed to pass rigorous enterprise healthcare security audits while maintaining rapid development velocity across a distributed engineering team.",
+                "solution": "We implemented a zero-trust network perimeter, HashiCorp Vault secrets rotation, automated SAST/DAST CI/CD security gates, and audit logging.",
+                "results": "Achieved SOC2 Type II certification with zero non-conformances in record time, unlocking $12M in enterprise health network pipeline contracts.",
+                "tech_stack": "Zero-Trust, Vault, ModSecurity, Django REST, AWS GovCloud",
+                "is_featured": True,
+                "order": 2,
+            },
+            {
+                "title": "Next-Gen Multi-Tenant Logistics SaaS Platform",
+                "slug": "omnilog-saas-platform",
+                "client_name": "OmniLog Global Freight",
+                "industry": "Supply Chain & Logistics",
+                "category_tag": "Multi-Tenant SaaS & Web App",
+                "impact_metric": "14x Scaling Capacity & $1.8M ARR Growth",
+                "summary": "Built a scalable multi-tenant freight dispatch platform with real-time GPS fleet tracking, predictive ETA routing, and automated client billing.",
+                "challenge": "Fragmented regional software systems caused manual spreadsheet coordination, delayed dispatch times, and inability to onboard global logistics partners.",
+                "solution": "Developed a centralized Django + React/Inertia SaaS with tenant isolation, automated invoice workflows, and real-time WebSocket fleet updates.",
+                "results": "Successfully onboarded over 450 regional logistics partners within 6 months, slashing fleet dispatch turnaround by 65%.",
+                "tech_stack": "Django, Inertia.js, React, PostgreSQL, Docker, Redis",
+                "is_featured": True,
+                "order": 3,
+            },
+        ]
+        for c in case_studies_data:
+            CaseStudy.objects.update_or_create(
+                slug=c["slug"],
+                defaults=c,
             )
-            home_page.add_child(instance=case_index)
-            case_index.save_revision().publish()
+        self.stdout.write(self.style.SUCCESS(f"Seeded {len(case_studies_data)} case studies."))
 
-            case_studies = [
-                (
-                    "FinTech Global",
-                    "fintech-global-saas",
-                    "FinTech SaaS Platform & Zero-Trust Security Overhaul",
-                    "Banking & Payments",
-                    "+340% System Throughput & Zero Breach Record",
-                    "Upgraded a legacy transaction gateway serving 50,000+ merchants into a modern, multi-tenant microservice architecture with end-to-end zero-trust encryption.",
-                ),
-                (
-                    "HealthData Nexus",
-                    "healthdata-nexus",
-                    "HIPAA Medical Analytics & Wagtail Clinical Portal",
-                    "Healthcare & BioTech",
-                    "10x Faster Query Response Times",
-                    "Built a unified medical records dashboard powered by Wagtail CMS, processing over 5 million daily telemetry points with real-time anomaly alerts.",
-                ),
-                (
-                    "LogiCloud Systems",
-                    "logicloud-systems",
-                    "AI Route Optimization & Infrastructure Penetration Audit",
-                    "Logistics & Supply Chain",
-                    "$4.2M Annual Fleet Cost Reduction",
-                    "Implemented custom ML route prediction algorithms coupled with a total cyber-security overhaul across 1,200 fleet vehicles and iot sensors.",
-                ),
-            ]
-
-            for client, slug, title, ind, metric, summary in case_studies:
-                c_page = CaseStudyPage(
-                    title=title,
-                    slug=slug,
-                    client_name=client,
-                    industry=ind,
-                    impact_metric=metric,
-                    summary=summary,
-                    body=f"<h2>Challenge</h2><p>{summary}</p><h2>Solution</h2><p>Datum Metrics deployed a specialized engineering squad to design, audit, and launch a modernized platform utilizing Wagtail, Python, and cloud-native containerization.</p><h2>Measurable Results</h2><p><strong>{metric}</strong></p>",
-                )
-                case_index.add_child(instance=c_page)
-                c_page.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS("Created Case Study Index and 3 Case Studies"))
-
-        # 6. Blog Index & Posts
-        blog_index = BlogIndexPage.objects.filter(slug="insights").first()
-        if not blog_index:
-            blog_index = BlogIndexPage(
-                title="Engineering Insights & Industry Thought Leadership",
-                slug="insights",
-                intro="<p>Articles, whitepapers, and guides written by our senior engineers on Wagtail CMS, Web Development, SaaS architecture, Cyber-Security, and Data Analytics.</p>",
+        # 5. Seed Blog Posts / Insights
+        posts_data = [
+            {
+                "title": "Architecting Zero-Trust Python & Django Backends for 2026",
+                "slug": "architecting-zero-trust-django-2026",
+                "author": "Dr. Marcus Vance, Principal Security Architect",
+                "category": "Cyber-Security",
+                "published_at": date(2026, 2, 15),
+                "read_time": "7 min read",
+                "intro": "A comprehensive deep dive into hardening Django applications against automated API scraping, state-actor intrusion vectors, and credential-stuffing attacks.",
+                "content": "<p>In modern enterprise deployments, perimeter defense alone is obsolete. Zero-Trust architecture assumes that every request—internal or external—must be cryptographically verified and contextually evaluated.</p><h3>Key Pillars of Modern Django Hardening</h3><ul><li>Strict cryptographic token authentication with short-lived session rotation</li><li>Granular row-level permissions enforced at the ORM layer</li><li>Automated secret rotation using centralized vaults rather than static environment variables</li><li>Full audit telemetry streaming directly to immutable SIEM log storage</li></ul>",
+                "is_published": True,
+            },
+            {
+                "title": "Building Monolithic SPAs with Inertia.js, React, and Django",
+                "slug": "monolithic-spas-with-inertia-react-django",
+                "author": "Elena Rostova, Lead Full-Stack Engineer",
+                "category": "Web Development",
+                "published_at": date(2026, 2, 28),
+                "read_time": "6 min read",
+                "intro": "Why pairing Django's battle-tested backend with Inertia.js and React gives enterprise teams the speed of classic monoliths with the slick UX of single-page apps.",
+                "content": "<p>Developers frequently find themselves choosing between standard server-rendered HTML templates or complex decoupled frontend build pipelines. Inertia.js bridges this divide flawlessly.</p><h3>The Power of Server-Driven Single-Page Apps</h3><p>By treating Django views as the single source of truth for routing, authentication, and permissions while letting React render the visual layer, teams eliminate client-side state synchronization overhead without sacrificing smooth client-side transitions.</p>",
+                "is_published": True,
+            },
+            {
+                "title": "Optimizing PostgreSQL for Sub-50ms Multi-Tenant Queries",
+                "slug": "optimizing-postgresql-multitenant-queries",
+                "author": "David Chen, Senior Database Engineer",
+                "category": "Data & Performance",
+                "published_at": date(2026, 3, 1),
+                "read_time": "8 min read",
+                "intro": "Proven indexing strategies, connection pool tuning, and partitioning techniques to maintain lightning-fast response times under heavy concurrent tenant loads.",
+                "content": "<p>As multi-tenant SaaS platforms scale past hundreds of gigabytes, query planner inefficiencies and index fragmentation can quickly degrade performance.</p><h3>Strategies for Scale</h3><p>Implementing composite partial indices, table partitioning based on tenant ID and date ranges, and PgBouncer transaction pooling ensures sub-50ms P99 query latencies even during multi-million event peak windows.</p>",
+                "is_published": True,
+            },
+        ]
+        for p in posts_data:
+            BlogPost.objects.update_or_create(
+                slug=p["slug"],
+                defaults=p,
             )
-            home_page.add_child(instance=blog_index)
-            blog_index.save_revision().publish()
+        self.stdout.write(self.style.SUCCESS(f"Seeded {len(posts_data)} blog posts."))
 
-            blog_posts = [
-                (
-                    "Why Wagtail CMS is the Best Choice for High-Scale Enterprise Websites",
-                    "why-wagtail-cms-for-enterprise",
-                    "Explore how Wagtail CMS combines Python flexibility, Django security, and intuitive content editing to outperform traditional legacy CMS platforms.",
-                    "2026-08-20",
-                    "6 min read",
-                ),
-                (
-                    "Building Bulletproof Multi-Tenant SaaS Architecture in 2026",
-                    "building-multi-tenant-saas-architecture",
-                    "A deep dive into database isolation strategies, tenant routing, role permissions, and zero-downtime schema migrations for modern SaaS applications.",
-                    "2026-08-15",
-                    "8 min read",
-                ),
-                (
-                    "Cyber-Security Checklist: Securing Web Platforms Against Modern Threats",
-                    "cyber-security-checklist-for-web-platforms",
-                    "Key strategies for implementing zero-trust authentication, API rate limiting, header security policy enforcement, and continuous automated auditing.",
-                    "2026-08-10",
-                    "7 min read",
-                ),
-            ]
-
-            for title, slug, intro, post_date, r_time in blog_posts:
-                b_page = BlogPage(
-                    title=title,
-                    slug=slug,
-                    author="Datum Metrics Engineering Team",
-                    date=date.fromisoformat(post_date),
-                    read_time=r_time,
-                    intro=intro,
-                    body=f"<p class='lead'>{intro}</p><h2>Introduction</h2><p>As digital ecosystems evolve, enterprises must balance rapid development speed with uncompromised security and performance.</p><h2>Key Takeaways</h2><ul><li>Prioritize security by default at every architecture layer.</li><li>Leverage modular StreamField page builders for editorial efficiency.</li><li>Ensure real-time metric tracking and monitoring.</li></ul>",
-                )
-                blog_index.add_child(instance=b_page)
-                b_page.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS("Created Blog Index and 3 Blog Posts"))
-
-        # 7. Contact Page
-        contact_page = ContactPage.objects.filter(slug="contact").first()
-        if not contact_page:
-            contact_page = ContactPage(
-                title="Get In Touch | Datum Metrics Ltd",
-                slug="contact",
-                intro="<p>Have a project in mind or need expert technical consultation on Web Development, SaaS, Cyber-Security, or Data Analytics? Contact our engineering team today.</p>",
-                thank_you_text="<h3>Thank You for Reaching Out!</h3><p>Your inquiry has been received. A senior engineer from Datum Metrics will contact you within 24 business hours.</p>",
-                to_address="contact@datummetrics.com",
-                from_address="noreply@datummetrics.com",
-                subject="New Project Inquiry - Datum Metrics Website",
+        # 6. Seed Testimonials
+        testimonials_data = [
+            {
+                "author": "Alexander Wright",
+                "role": "Chief Technology Officer",
+                "company": "FinScale Global",
+                "quote": "Datum Metrics transformed our core processing infrastructure. Their team engineered a system that handled our 400% traffic surge during Black Friday with zero latency spikes or service interruptions.",
+                "metric_badge": "Verified Enterprise Client",
+                "is_active": True,
+                "order": 1,
+            },
+            {
+                "author": "Sarah Jenkins",
+                "role": "VP of Engineering",
+                "company": "OmniLog Logistics",
+                "quote": "The speed and code quality delivered by Datum Metrics is exceptional. The pure Django + Inertia architecture allowed us to roll out customer-facing portal features in weeks rather than quarters.",
+                "metric_badge": "Verified Enterprise Client",
+                "is_active": True,
+                "order": 2,
+            },
+            {
+                "author": "Michael Torres",
+                "role": "Chief Information Security Officer",
+                "company": "MediShield Cloud",
+                "quote": "Their cybersecurity and compliance audit was by far the most thorough we've experienced. We passed our SOC2 Type II audit on the first attempt thanks to their guidance.",
+                "metric_badge": "Verified Enterprise Client",
+                "is_active": True,
+                "order": 3,
+            },
+        ]
+        for t in testimonials_data:
+            Testimonial.objects.update_or_create(
+                author=t["author"],
+                company=t["company"],
+                defaults=t,
             )
-            home_page.add_child(instance=contact_page)
+        self.stdout.write(self.style.SUCCESS(f"Seeded {len(testimonials_data)} testimonials."))
 
-            # Add form fields
-            FormField.objects.create(page=contact_page, label="Full Name", field_type="singleline", required=True)
-            FormField.objects.create(page=contact_page, label="Work Email", field_type="email", required=True)
-            FormField.objects.create(page=contact_page, label="Company / Organization", field_type="singleline", required=False)
-            FormField.objects.create(
-                page=contact_page,
-                label="Primary Service Interest",
-                field_type="dropdown",
-                choices="Web Development, Software as a Service (SaaS), Cyber-Security, Data Analytics & BI, AI / Machine Learning, Cloud Infrastructure & DevOps",
-                required=True,
-            )
-            FormField.objects.create(page=contact_page, label="Project Details & Timeline", field_type="multiline", required=True)
-
-            contact_page.save_revision().publish()
-            self.stdout.write(self.style.SUCCESS("Created Contact Page with Form Fields"))
-
-        self.stdout.write(self.style.SUCCESS("Successfully seeded Datum Metrics Wagtail CMS database!"))
+        self.stdout.write(self.style.SUCCESS("Datum Metrics database content seeding completed successfully!"))

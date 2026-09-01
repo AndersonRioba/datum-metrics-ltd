@@ -1,42 +1,89 @@
-from home.models import HomePage
-
-from wagtail.models import Page, Site
-from wagtail.test.utils import WagtailPageTestCase
-
-
-class HomeSetUpTests(WagtailPageTestCase):
-    """
-    Tests for basic page structure setup and HomePage creation.
-    """
-
-    def test_root_create(self):
-        root_page = Page.objects.get(pk=1)
-        self.assertIsNotNone(root_page)
-
-    def test_homepage_create(self):
-        root_page = Page.objects.get(pk=1)
-        homepage = HomePage(title="Home")
-        root_page.add_child(instance=homepage)
-        self.assertTrue(HomePage.objects.filter(title="Home").exists())
+from django.test import TestCase, Client
+from django.urls import reverse
+from .models import CompanyMetric, Service, CaseStudy, BlogPost, Testimonial, ContactInquiry
 
 
-class HomeTests(WagtailPageTestCase):
-    """
-    Tests for homepage functionality and rendering.
-    """
-
+class ModelTests(TestCase):
     def setUp(self):
-        """
-        Create a homepage instance for testing.
-        """
-        root_page = Page.get_first_root_node()
-        Site.objects.create(hostname="testsite", root_page=root_page, is_default_site=True)
-        self.homepage = HomePage(title="Home")
-        root_page.add_child(instance=self.homepage)
+        self.metric = CompanyMetric.objects.create(
+            number="99.99%",
+            label="Uptime",
+            description="High availability cluster",
+            icon="shield",
+            order=1,
+        )
+        self.service = Service.objects.create(
+            title="Enterprise Web Development",
+            category="Web Development",
+            summary="Custom web apps with Django & Inertia",
+            is_featured=True,
+            order=1,
+        )
+        self.case_study = CaseStudy.objects.create(
+            title="Scalable SaaS Architecture",
+            client_name="TestCorp",
+            industry="FinTech",
+            impact_metric="+300% Growth",
+            summary="Transformed architecture",
+            is_featured=True,
+        )
+        self.post = BlogPost.objects.create(
+            title="Deep Dive into Pure Django",
+            author="Dev Team",
+            published_at="2026-03-01",
+            intro="Why pure Django rocks",
+            content="<p>Full content here</p>",
+            is_published=True,
+        )
+        self.testimonial = Testimonial.objects.create(
+            author="Jane Doe",
+            role="CTO",
+            company="Acme Corp",
+            quote="Incredible work by Datum Metrics.",
+        )
 
-    def test_homepage_is_renderable(self):
-        self.assertPageIsRenderable(self.homepage)
+    def test_models_str_and_slug(self):
+        self.assertEqual(str(self.metric), "99.99% - Uptime")
+        self.assertEqual(self.service.slug, "enterprise-web-development")
+        self.assertTrue(self.case_study.slug.startswith("testcorp-scalable-saas-architecture"))
+        self.assertEqual(str(self.testimonial), "Jane Doe (Acme Corp)")
 
-    def test_homepage_template_used(self):
-        response = self.client.get(self.homepage.url)
-        self.assertTemplateUsed(response, "home/home_page.html")
+
+class APIRouteTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.service = Service.objects.create(
+            title="Cloud Infrastructure",
+            summary="AWS & Kubernetes DevOps",
+            is_featured=True,
+        )
+
+    def test_services_api(self):
+        response = self.client.get("/api/v1/services/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_roi_calculator_api(self):
+        response = self.client.post(
+            "/api/v1/roi-calculator/",
+            data={"volume": 100, "users": 25000},
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn("throughput_boost_pct", data)
+        self.assertIn("estimated_annual_savings_usd", data)
+
+    def test_contact_inquiry_api(self):
+        response = self.client.post(
+            "/api/v1/contact-inquiries/",
+            data={
+                "name": "Jane Smith",
+                "email": "jane@example.com",
+                "company": "Enterprise AI",
+                "service_interest": "Cyber-Security",
+                "message": "We would like to request an enterprise audit.",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(ContactInquiry.objects.count(), 1)
