@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <!-- Background square with rounded corners -->
+  <rect width="40" height="40" rx="8" fill="#ef4444"/>
+
+  <!-- Bar chart bars (white) -->
+  <rect x="6"  y="22" width="5" height="12" rx="1.5" fill="white"/>
+  <rect x="14" y="15" width="5" height="19" rx="1.5" fill="white"/>
+  <rect x="22" y="9"  width="5" height="25" rx="1.5" fill="white"/>
+  <rect x="30" y="18" width="5" height="16" rx="1.5" fill="white" opacity="0.7"/>
+
+  <!-- Upward trend arrow accent -->
+  <path d="M24 9 L35 4" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M32 4 L35 4 L35 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+</svg>

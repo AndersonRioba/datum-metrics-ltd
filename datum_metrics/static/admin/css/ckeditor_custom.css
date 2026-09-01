@@ -1,0 +1,18 @@
+/* Dark theme integration for CKEditor 5 in Django Admin */
+.ck-editor__editable {
+  min-height: 280px !important;
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+.ck-toolbar {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+}
+
+.ck.ck-editor {
+  max-width: 950px;
+}
