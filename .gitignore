@@ -39,9 +39,6 @@ static/
 .env.local
 .env.production
 
-# Secret keys / credentials
-datum_metrics/settings/production.py
-
 # IDE / Editor
 .vscode/
 .idea/
