@@ -6,8 +6,10 @@ __pycache__/
 .Python
 *.egg
 *.egg-info/
-dist/
+/dist/
 build/
+!datum_metrics/static/dist/
+!datum_metrics/static/dist/**
 eggs/
 parts/
 var/
