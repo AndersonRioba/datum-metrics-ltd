@@ -9,11 +9,13 @@ ALLOWED_HOSTS = ['datum-metrics.com', 'www.datum-metrics.com']
 SECRET_KEY = 'qkjfoldb5bb9bc#0no#^wvm98$xcgrp+yq!e4)4pk=rg@9(*kt'
 
 # Production database (cPanel MySQL)
+# ⚠️  Verify these names match EXACTLY what is shown in cPanel → MySQL Databases.
+#     MySQL does NOT allow hyphens in database/user names — use the exact cPanel format.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "raveyhpw_datum-metrics",   # cPanel DB name format
-        "USER": "raveyhpw_datum-metrics",           # cPanel DB user format
+        "NAME": "raveyhpw_datum_metrics",   # cPanel DB name (underscores only)
+        "USER": "raveyhpw_datums",   # cPanel DB user (underscores only)
         "PASSWORD": "K?wAQ7N2qFiA^g2e",
         "HOST": "localhost",
         "PORT": "3306",
@@ -24,8 +26,8 @@ DATABASES = {
     }
 }
 
-# Static files served by the web server
-STATIC_ROOT = BASE_DIR / 'public' / 'static'
+# Static files — served from the deployment root's /static/ folder
+STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
 
 STORAGES = {
